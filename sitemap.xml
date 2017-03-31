@@ -2,45 +2,45 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>/v0g0n.org/resum%C3%A9/</loc>
+    <loc>/resum%C3%A9/</loc>
     <lastmod>2017-03-31T17:26:11+05:30</lastmod>
   </url>
   
   <url>
-    <loc>/v0g0n.org/2017/03/welcome/</loc>
+    <loc>/2017/03/welcome/</loc>
     <lastmod>2017-03-31T12:06:38+05:30</lastmod>
   </url>
   
   <url>
-    <loc>/v0g0n.org/about/</loc>
+    <loc>/about/</loc>
     <lastmod>2017-03-31T12:06:27+05:30</lastmod>
   </url>
   
   <url>
-    <loc>/v0g0n.org/tags/about/</loc>
+    <loc>/tags/about/</loc>
     <lastmod>2017-03-31T12:06:38+05:30</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/v0g0n.org/post/</loc>
+    <loc>/post/</loc>
     <lastmod>2017-03-31T12:06:38+05:30</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/v0g0n.org/</loc>
+    <loc>/</loc>
     <lastmod>2017-03-31T17:26:11+05:30</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/v0g0n.org/tags/</loc>
+    <loc>/tags/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/v0g0n.org/tags/welcome/</loc>
+    <loc>/tags/welcome/</loc>
     <lastmod>2017-03-31T12:06:38+05:30</lastmod>
     <priority>0</priority>
   </url>
