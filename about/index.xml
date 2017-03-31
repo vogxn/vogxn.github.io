@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>About Me on Prasanna&#39;s blog</title>
+    <link>https://v0g0n.org/blog/about/index.xml</link>
+    <description>Recent content in About Me on Prasanna&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 31 Mar 2017 12:06:27 +0530</lastBuildDate>
+    <atom:link href="https://v0g0n.org/blog/about/index.xml" rel="self" type="application/rss+xml" />
+    
+  </channel>
+</rss>
