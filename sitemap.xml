@@ -2,45 +2,45 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://v0g0n.org/blog/resum%C3%A9/</loc>
+    <loc>/v0g0n.org/resum%C3%A9/</loc>
     <lastmod>2017-03-31T17:26:11+05:30</lastmod>
   </url>
   
   <url>
-    <loc>https://v0g0n.org/blog/2017/03/welcome/</loc>
+    <loc>/v0g0n.org/2017/03/welcome/</loc>
     <lastmod>2017-03-31T12:06:38+05:30</lastmod>
   </url>
   
   <url>
-    <loc>https://v0g0n.org/blog/about/</loc>
+    <loc>/v0g0n.org/about/</loc>
     <lastmod>2017-03-31T12:06:27+05:30</lastmod>
   </url>
   
   <url>
-    <loc>https://v0g0n.org/blog/tags/about/</loc>
+    <loc>/v0g0n.org/tags/about/</loc>
     <lastmod>2017-03-31T12:06:38+05:30</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://v0g0n.org/blog/post/</loc>
+    <loc>/v0g0n.org/post/</loc>
     <lastmod>2017-03-31T12:06:38+05:30</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://v0g0n.org/blog/</loc>
+    <loc>/v0g0n.org/</loc>
     <lastmod>2017-03-31T17:26:11+05:30</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://v0g0n.org/blog/tags/</loc>
+    <loc>/v0g0n.org/tags/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://v0g0n.org/blog/tags/welcome/</loc>
+    <loc>/v0g0n.org/tags/welcome/</loc>
     <lastmod>2017-03-31T12:06:38+05:30</lastmod>
     <priority>0</priority>
   </url>
