@@ -46,7 +46,7 @@ built more command line driven tools over the years and have lost touch with
 the web.&lt;/p&gt;
 
 &lt;p&gt;My pet project was very simple, in fact, it wasn&amp;rsquo;t even something novel. But
-what the heck? I wanted to build it with Go. And hence we have Tweetpost.
+what the heck? I wanted to build it with Go. And hence we have &lt;a href=&#34;https://github.com/vogxn/tweetpost.git&#34;&gt;Tweetpost&lt;/a&gt;.
 Tweetpost is yet another of those online tools to help you rant on the internet
 via your Twitter account. In that sense it&amp;rsquo;s probably a poor version of
 &lt;a href=&#34;http://tweetstorm.io&#34;&gt;Tweetstorm&lt;/a&gt;.&lt;/p&gt;
@@ -170,6 +170,8 @@ split content.&lt;/p&gt;
     
 &lt;/figure&gt;
 &lt;/p&gt;
+
+&lt;p&gt;Checkout the project on github - &lt;a href=&#34;https://github.com/vogxn/tweetpost.git&#34;&gt;Tweetpost&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     
