@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>/2017/04/tweetpost/</loc>
+    <lastmod>2017-04-19T17:32:37+05:30</lastmod>
+  </url>
+  
+  <url>
     <loc>/resum%C3%A9/</loc>
     <lastmod>2017-04-01T16:10:15+05:30</lastmod>
   </url>
@@ -23,19 +28,37 @@
   </url>
   
   <url>
+    <loc>/tags/golang/</loc>
+    <lastmod>2017-04-19T17:32:37+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/post/</loc>
-    <lastmod>2017-03-31T12:06:38+05:30</lastmod>
+    <lastmod>2017-04-19T17:32:37+05:30</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/</loc>
-    <lastmod>2017-04-01T16:10:15+05:30</lastmod>
+    <lastmod>2017-04-19T17:32:37+05:30</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/tweetpost/</loc>
+    <lastmod>2017-04-19T17:32:37+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/webapp/</loc>
+    <lastmod>2017-04-19T17:32:37+05:30</lastmod>
     <priority>0</priority>
   </url>
   

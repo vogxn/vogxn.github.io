@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <base href="/">
+    
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400|Old+Standard+TT:400' rel='stylesheet' type='text/css'>
+
+    <link rel="icon" type="image/png" href="/favicon_16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon_32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon_128x128.png" sizes="128x128">
+
+    <title>
+      
+      
+         Tweetpost 
+      
+    </title>
+    <link rel="canonical" href="/2017/04/tweetpost/">
+
+    <style>
+  * {
+    border:0;
+    font:inherit;
+    font-size:100%;
+    vertical-align:baseline;
+    margin:0;
+    padding:0;
+    color: black;
+  }
+
+  body {
+    font-family:'Open Sans', 'Myriad Pro', Myriad, sans-serif;
+    font-size:17px;
+    line-height:160%;
+    color:#1d1313;
+    max-width:700px;
+    margin:auto;
+  }
+
+  p {
+    margin: 20px 0;
+  }
+
+  a img {
+    border:none;
+  }
+
+  img {
+    margin: 10px auto 10px auto;
+    max-width: 100%;
+    display: block;
+  }
+
+  pre, code {
+    font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    background-color: #f7f7f7;
+  }
+
+  code {
+    font-size: 12px;
+    padding: 4px;
+  }
+
+  pre {
+    margin-top: 0;
+    margin-bottom: 16px;
+    word-wrap: normal;
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+  }
+
+  pre>code {
+    padding: 0;
+    margin: 0;
+    font-size: 100%;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
+    border: 0;
+  }
+
+  pre code {
+    display: inline;
+    max-width: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
+  }
+
+  pre code::before,
+  pre code::after {
+    content: normal;
+  }
+
+  em,q,em,dfn {
+    font-style:italic;
+  }
+
+  .sans,html .gist .gist-file .gist-meta {
+    font-family:"Open Sans","Myriad Pro",Myriad,sans-serif;
+  }
+
+  .mono,pre,code,tt,p code,li code {
+    font-family:Menlo,Monaco,"Andale Mono","lucida console","Courier New",monospace;
+  }
+
+  .heading,.serif,h1,h2,h3 {
+    font-family:"Old Standard TT",serif;
+  }
+
+  strong {
+    font-weight:600;
+  }
+
+  q:before {
+    content:"\201C";
+  }
+
+  q:after {
+    content:"\201D";
+  }
+
+  del,s {
+    text-decoration:line-through;
+  }
+
+  blockquote {
+    font-family:"Old Standard TT",serif;
+    text-align:center;
+    padding:50px;
+  }
+
+  blockquote p {
+    display:inline-block;
+    font-style:italic;
+  }
+
+  blockquote:before,blockquote:after {
+    font-family:"Old Standard TT",serif;
+    content:'\201C';
+    font-size:35px;
+    color:#403c3b;
+  }
+
+  blockquote:after {
+    content:'\201D';
+  }
+
+  hr {
+    width:40%;
+    height: 1px;
+    background:#403c3b;
+    margin: 25px auto;
+  }
+
+  h1 {
+    font-size:35px;
+  }
+
+  h2 {
+    font-size:28px;
+  }
+
+  h3 {
+    font-size:22px;
+    margin-top:18px;
+  }
+
+  h1 a,h2 a,h3 a {
+    text-decoration:none;
+  }
+
+  h1,h2 {
+    margin-top:28px;
+  }
+
+  #sub-header, time {
+    color:#403c3b;
+    font-size:13px;
+  }
+
+  #sub-header {
+    margin: 0 4px;
+  }
+
+  #nav h1 a {
+    font-size:35px;
+    color:#1d1313;
+    line-height:120%;
+  }
+
+  .posts_listing a,#nav a {
+    text-decoration: none;
+  }
+
+  li {
+    margin-left: 20px;
+  }
+
+  ul li {
+    margin-left: 5px;
+  }
+
+  ul li {
+    list-style-type: none;
+  }
+  ul li:before {
+    content:"\00BB \0020";
+  }
+
+  #nav ul li:before, .posts_listing li:before {
+    content:'';
+    margin-right:0;
+  }
+
+  #content {
+    text-align:left;
+    width:100%;
+    font-size:15px;
+    padding:60px 0 80px;
+  }
+
+  #content h1,#content h2 {
+    margin-bottom:5px;
+  }
+
+  #content h2 {
+    font-size:25px;
+  }
+
+  #content .entry-content {
+    margin-top:15px;
+  }
+
+  #content time {
+    margin-left:3px;
+  }
+
+  #content h1 {
+    font-size:30px;
+  }
+
+  .highlight {
+    margin: 10px 0;
+  }
+
+  .posts_listing {
+    margin:0 0 50px;
+  }
+
+  .posts_listing li {
+    margin:0 0 25px 15px;
+  }
+
+  .posts_listing li a:hover,#nav a:hover {
+    text-decoration: underline;
+  }
+
+  #nav {
+    text-align:center;
+    position:static;
+    margin-top:60px;
+  }
+
+  #nav ul {
+    display: table;
+    margin: 8px auto 0 auto;
+  }
+
+  #nav li {
+    list-style-type:none;
+    display:table-cell;
+    font-size:15px;
+    padding: 0 20px;
+  }
+
+  #links {
+    margin: 50px 0 0 0;
+  }
+
+  #links :nth-child(2) {
+    float:right;
+  }
+
+  #not-found {
+    text-align: center;
+  }
+
+  #not-found a {
+    font-family:"Old Standard TT",serif;
+    font-size: 200px;
+    text-decoration: none;
+    display: inline-block;
+    padding-top: 225px;
+  }
+
+  @media (max-width: 750px) {
+    body {
+      padding-left:20px;
+      padding-right:20px;
+    }
+
+    #nav h1 a {
+      font-size:28px;
+    }
+
+    #nav li {
+      font-size:13px;
+      padding: 0 15px;
+    }
+
+    #content {
+      margin-top:0;
+      padding-top:50px;
+      font-size:14px;
+    }
+
+    #content h1 {
+      font-size:25px;
+    }
+
+    #content h2 {
+      font-size:22px;
+    }
+
+    .posts_listing li div {
+      font-size:12px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    body {
+      padding-left:20px;
+      padding-right:20px;
+    }
+
+    #nav h1 a {
+      font-size:22px;
+    }
+
+    #nav li {
+      font-size:12px;
+      padding: 0 10px;
+    }
+
+    #content {
+      margin-top:0;
+      padding-top:20px;
+      font-size:12px;
+    }
+
+    #content h1 {
+      font-size:20px;
+    }
+
+    #content h2 {
+      font-size:18px;
+    }
+
+    .posts_listing li div{
+      font-size:12px;
+    }
+  }
+</style>
+
+
+    
+  </head>
+
+  <body>
+    <section id=nav>
+      <h1><a href="/">Prasanna&#39;s Blog</a></h1>
+      <ul>
+        
+          <li><a href="about/index.html">About</a></li>
+        
+          <li><a href="https://github.com/vogxn">Projects</a></li>
+        
+          <li><a href="resum%c3%a9/index.html">Resumé</a></li>
+        
+      </ul>
+    </section>
+
+
+<section id=content>
+  <h1> Tweetpost </h1>
+
+  <div id=sub-header>
+    April 2017 · 5 minute read
+  </div>
+
+  <div class="entry-content">
+    
+
+<p>I&rsquo;ve spent the last month going through the fundamentals of building
+applications in Go. This is a blog post about what I learned.</p>
+
+<p>I was first exposed to the language back in 2013 when I was working with <a href="https://cloudstack.apache.org/">Apache
+Cloudstack</a>. At the time, I was using <a href="https://github.com/mitchellh">Mitchell
+Hashimoto&rsquo;s</a>
+<a href="https://github.com/hashicorp/packer">Packer</a> for spinning up images in AWS.
+However, a switch of jobs took me in a different direction and I never delved
+deeper. Now, I&rsquo;ve finally found some time to experiment with Go again.</p>
+
+<h3 id="language-review">Language Review</h3>
+
+<p>I went back to review the language using the excellent
+<a href="https://golang.org">golang</a> website. The golang
+<a href="https://tour.golang.org/">tour</a> was my first stop where I found the examples
+have been improved - channels and concurrency are explained much better. But
+this isn&rsquo;t nearly enough reading to build anything useful yet. As recommended,
+I went through the wonderful applied language tutorial at
+<a href="https://appliedgo.net/">appliedgo.net</a> and the standard libraries, all the
+while being reminded that <a href="https://golang.org/doc/effective_go.html">Idiomatic
+Go</a> is the style that all Golang
+programmers should aspire to write.</p>
+
+<h3 id="the-project">The Project</h3>
+
+<p>I wanted to apply my learning to build a web application. I&rsquo;ve traditionally
+built more command line driven tools over the years and have lost touch with
+the web.</p>
+
+<p>My pet project was very simple, in fact, it wasn&rsquo;t even something novel. But
+what the heck? I wanted to build it with Go. And hence we have Tweetpost.
+Tweetpost is yet another of those online tools to help you rant on the internet
+via your Twitter account. In that sense it&rsquo;s probably a poor version of
+<a href="http://tweetstorm.io">Tweetstorm</a>.</p>
+
+<h2 id="part-1-tokenizer">Part 1: Tokenizer</h2>
+
+<p>The first part was simply breaking down text into tokens so the total length
+did not exceed Twitter character limits. Now you can write this using basic
+arrays and string manipulation without much fuss. But Go&rsquo;s interfaces are
+powerful. The Go community will often stress on the virtues of the
+<a href="https://golang.org/pkg/io/#Reader"><code>Reader</code></a> and
+<a href="https://golang.org/pkg/io/#Reader"><code>Writer</code></a> interfaces and how widely they
+are applied through the standard library for a myriad functions. So I went
+looking to see if there was something that could assist in text tokenization.
+And there it was - <a href="https://golang.org/pkg/text/scanner/"><code>Scanner</code></a></p>
+
+<p>The <code>Scanner</code> interface is implemented by <code>bufio</code> package to break text into
+tokens of words, lines and runes. In order to adapt this for splitting tweets I
+had to implement a <a href="https://golang.org/pkg/bufio/#SplitFunc"><code>SplitFunc</code></a>
+function. The signature of which looks as shown:</p>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="font-style: italic">// ScanTweets is a split function for a Scanner that returns a sequence of</span>
+<span style="font-style: italic">// tweets, each tweet not more than TWEET_CHAR_LIMIT(140) characters in length.</span>
+<span style="font-weight: bold">func</span> ScanTweets(data []<span style="font-weight: bold">byte</span>, atEOF <span style="font-weight: bold">bool</span>) (advance <span style="font-weight: bold">int</span>, token []<span style="font-weight: bold">byte</span>, err <span style="font-weight: bold">error</span>) {
+   ...
+}
+</pre></div>
+
+<p>The implementation is a slight modification of the <code>ScanWords</code> function. We
+detect word boundaries but keep appending the word to a tweet slice that we are
+building. The token boundary is imposed by checking that the append does not
+cause us to exceed the twitter character limit. The next token scan begins when
+we return the tweet built thus far.</p>
+
+<p>Now we can start breaking any text into tweets with a simple <code>scanner.Scan()</code>
+iteration as shown below.</p>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="font-weight: bold">var</span> longTweet = <span style="font-style: italic">`This is a long tweet that should be split into two separate</span>
+<span style="font-style: italic">tweets using the splitter function of this project.  This should validate the</span>
+<span style="font-style: italic">basic splitting check and perform a simple functional test.`</span>
+
+<span style="font-weight: bold">var</span> scanner = bufio.NewScanner(strings.NewReader(longTweet))
+scanner.Split(ScanTweets)
+<span style="font-weight: bold">for</span> scanner.Scan() {
+  fmt.Println(scanner.Text())
+}
+</pre></div>
+
+<p>As the tests show, the scanner takes anything that resembles a <code>Reader</code>
+interface. So we can convert text files too into tweets using this newly
+written function.</p>
+
+<h2 id="part-2-web-application">Part 2: Web application</h2>
+
+<p>I started this blog using <a href="https://gohugo.io/">Hugo</a> - a static website
+generator written in Go. When doing that I encountered
+<a href="https://golang.org/pkg/html/template/">templates</a>. Templates as the name
+suggests is a simple templating engine that is part of the Go standard
+libraries. The first implementation of Tweetpost therefore used the
+<code>html/template</code> utilities to render the various pages with a simple form
+<code>POST</code>. However, most modern web applications are written to do client side
+rendering to optimize bytes transferred.</p>
+
+<p>So I decided to try and learn the full-blown MVC way to write my toy application.
+Information about Go specific layouts for an MVC app was littered with a lot of
+opinions and frameworks (which the Go community seems to abhor). The
+<a href="https://github.com/avelino/awesome-go#web-frameworks">awesome-go</a> listings
+seem to have at least two dozen different frameworks
+and toolkits for the purpose. I picked something simple however.</p>
+
+<h3 id="innards">Innards</h3>
+
+<ul>
+<li><strong>Layout</strong>: Used the examples by <a href="https://www.calhoun.io/creating-controllers-views-in-go/">Jon Calhoun</a></li>
+<li><strong>Routing</strong>: For routing and the REST API I used <a href="https://github.com/julienschmidt/httprouter">httprouter</a> for its simplicity</li>
+<li><strong>Response/Templates</strong>: <code>net/http</code> for response writing with minimum use of <code>html/template</code></li>
+<li><strong>Client Side</strong>: <a href="https://getbootstrap.com">Bootstrap</a> and jQuery</li>
+</ul>
+
+<p>By far the most time consuming part for me was getting through jQuery and then
+through bootstrap. TBH I&rsquo;ve never really written these from scratch but I&rsquo;m
+glad I got digging and spent the time. Bootstrap seems amazing for creating
+beautiful content.</p>
+
+<p>The app itself is straightforward with a single REST <code>/post</code> endpoint that
+returns <code>JSON</code> content. jQuery then uses bootstrap templates to render the
+split content.</p>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span>➜  ~ curl -sL -X POST --data <span style="font-style: italic">&#39;{ &quot;text&quot;: &quot;Lorem ipsum dolor sit amet,</span>
+<span style="font-style: italic">consectetur adipiscing elit. Phasellus sed cursus turpis. Integer at efficitur</span>
+<span style="font-style: italic">diam. Suspendisse accumsan felis in mollis bibendum. Phasellus aliquam</span>
+<span style="font-style: italic">tincidunt mauris, vitae porttitor tellus laoreet et. Suspendisse eu purus</span>
+<span style="font-style: italic">dolor. Vivamus eu scelerisque tellus, in imperdiet justo. Aliquam erat</span>
+<span style="font-style: italic">volutpat. Cras sit amet porta mi, at pharetra felis. Morbi congue, ex in</span>
+<span style="font-style: italic">blandit iaculis, eros eros suscipit nibh, vitae vehicula nulla odio nec justo.</span>
+<span style="font-style: italic">Integer augue tortor, tempor eget purus non, fringilla dapibus augue. Curabitur</span>
+<span style="font-style: italic">tristique dui eget mattis faucibus. Nulla sed dictum risus, vitae hendrerit</span>
+<span style="font-style: italic">eros.&quot;}&#39;</span>  http://localhost:8080/post | jq .
+[
+  {
+    <span style="font-style: italic">&quot;text&quot;</span>: <span style="font-style: italic">&quot;1/ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed cursus turpis. Integer at efficitur diam. Suspendisse accumsan&quot;</span>
+  },
+  {
+    <span style="font-style: italic">&quot;text&quot;</span>: <span style="font-style: italic">&quot;2/ felis in mollis bibendum. Phasellus aliquam tincidunt mauris, vitae porttitor tellus laoreet et. Suspendisse eu purus dolor. Vivamus eu&quot;</span>
+  },
+  {
+    <span style="font-style: italic">&quot;text&quot;</span>: <span style="font-style: italic">&quot;3/ scelerisque tellus, in imperdiet justo. Aliquam erat volutpat. Cras sit amet porta mi, at pharetra felis. Morbi congue, ex in blandit&quot;</span>
+  },
+  {
+    <span style="font-style: italic">&quot;text&quot;</span>: <span style="font-style: italic">&quot;4/ iaculis, eros eros suscipit nibh, vitae vehicula nulla odio nec justo. Integer augue tortor, tempor eget purus non, fringilla dapibus&quot;</span>
+  },
+  {
+    <span style="font-style: italic">&quot;text&quot;</span>: <span style="font-style: italic">&quot;5/ augue. Curabitur tristique dui eget mattis faucibus. Nulla sed dictum risus, vitae hendrerit eros.&quot;</span>
+  }
+]
+</pre></div>
+
+<p>It looks prettier when rendered on the browser.
+
+<figure >
+    
+        <img src="/img/tweetpost.png" />
+    
+    
+</figure>
+</p>
+
+  </div>
+
+  <div id=links>
+    
+      <a class="basic-alignment left" href="/2017/03/welcome/">&laquo; Welcome</a>
+    
+    
+  </div>
+</section>
+
+  
+</body>
+</html>
+
+
+

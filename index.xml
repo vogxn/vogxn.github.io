@@ -6,8 +6,173 @@
     <description>Recent content on Prasanna&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 01 Apr 2017 16:10:15 +0530</lastBuildDate>
+    <lastBuildDate>Wed, 19 Apr 2017 17:32:37 +0530</lastBuildDate>
     <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Tweetpost</title>
+      <link>/2017/04/tweetpost/</link>
+      <pubDate>Wed, 19 Apr 2017 17:32:37 +0530</pubDate>
+      
+      <guid>/2017/04/tweetpost/</guid>
+      <description>
+
+&lt;p&gt;I&amp;rsquo;ve spent the last month going through the fundamentals of building
+applications in Go. This is a blog post about what I learned.&lt;/p&gt;
+
+&lt;p&gt;I was first exposed to the language back in 2013 when I was working with &lt;a href=&#34;https://cloudstack.apache.org/&#34;&gt;Apache
+Cloudstack&lt;/a&gt;. At the time, I was using &lt;a href=&#34;https://github.com/mitchellh&#34;&gt;Mitchell
+Hashimoto&amp;rsquo;s&lt;/a&gt;
+&lt;a href=&#34;https://github.com/hashicorp/packer&#34;&gt;Packer&lt;/a&gt; for spinning up images in AWS.
+However, a switch of jobs took me in a different direction and I never delved
+deeper. Now, I&amp;rsquo;ve finally found some time to experiment with Go again.&lt;/p&gt;
+
+&lt;h3 id=&#34;language-review&#34;&gt;Language Review&lt;/h3&gt;
+
+&lt;p&gt;I went back to review the language using the excellent
+&lt;a href=&#34;https://golang.org&#34;&gt;golang&lt;/a&gt; website. The golang
+&lt;a href=&#34;https://tour.golang.org/&#34;&gt;tour&lt;/a&gt; was my first stop where I found the examples
+have been improved - channels and concurrency are explained much better. But
+this isn&amp;rsquo;t nearly enough reading to build anything useful yet. As recommended,
+I went through the wonderful applied language tutorial at
+&lt;a href=&#34;https://appliedgo.net/&#34;&gt;appliedgo.net&lt;/a&gt; and the standard libraries, all the
+while being reminded that &lt;a href=&#34;https://golang.org/doc/effective_go.html&#34;&gt;Idiomatic
+Go&lt;/a&gt; is the style that all Golang
+programmers should aspire to write.&lt;/p&gt;
+
+&lt;h3 id=&#34;the-project&#34;&gt;The Project&lt;/h3&gt;
+
+&lt;p&gt;I wanted to apply my learning to build a web application. I&amp;rsquo;ve traditionally
+built more command line driven tools over the years and have lost touch with
+the web.&lt;/p&gt;
+
+&lt;p&gt;My pet project was very simple, in fact, it wasn&amp;rsquo;t even something novel. But
+what the heck? I wanted to build it with Go. And hence we have Tweetpost.
+Tweetpost is yet another of those online tools to help you rant on the internet
+via your Twitter account. In that sense it&amp;rsquo;s probably a poor version of
+&lt;a href=&#34;http://tweetstorm.io&#34;&gt;Tweetstorm&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;part-1-tokenizer&#34;&gt;Part 1: Tokenizer&lt;/h2&gt;
+
+&lt;p&gt;The first part was simply breaking down text into tokens so the total length
+did not exceed Twitter character limits. Now you can write this using basic
+arrays and string manipulation without much fuss. But Go&amp;rsquo;s interfaces are
+powerful. The Go community will often stress on the virtues of the
+&lt;a href=&#34;https://golang.org/pkg/io/#Reader&#34;&gt;&lt;code&gt;Reader&lt;/code&gt;&lt;/a&gt; and
+&lt;a href=&#34;https://golang.org/pkg/io/#Reader&#34;&gt;&lt;code&gt;Writer&lt;/code&gt;&lt;/a&gt; interfaces and how widely they
+are applied through the standard library for a myriad functions. So I went
+looking to see if there was something that could assist in text tokenization.
+And there it was - &lt;a href=&#34;https://golang.org/pkg/text/scanner/&#34;&gt;&lt;code&gt;Scanner&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;Scanner&lt;/code&gt; interface is implemented by &lt;code&gt;bufio&lt;/code&gt; package to break text into
+tokens of words, lines and runes. In order to adapt this for splitting tweets I
+had to implement a &lt;a href=&#34;https://golang.org/pkg/bufio/#SplitFunc&#34;&gt;&lt;code&gt;SplitFunc&lt;/code&gt;&lt;/a&gt;
+function. The signature of which looks as shown:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34; style=&#34;background: #ffffff&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;font-style: italic&#34;&gt;// ScanTweets is a split function for a Scanner that returns a sequence of&lt;/span&gt;
+&lt;span style=&#34;font-style: italic&#34;&gt;// tweets, each tweet not more than TWEET_CHAR_LIMIT(140) characters in length.&lt;/span&gt;
+&lt;span style=&#34;font-weight: bold&#34;&gt;func&lt;/span&gt; ScanTweets(data []&lt;span style=&#34;font-weight: bold&#34;&gt;byte&lt;/span&gt;, atEOF &lt;span style=&#34;font-weight: bold&#34;&gt;bool&lt;/span&gt;) (advance &lt;span style=&#34;font-weight: bold&#34;&gt;int&lt;/span&gt;, token []&lt;span style=&#34;font-weight: bold&#34;&gt;byte&lt;/span&gt;, err &lt;span style=&#34;font-weight: bold&#34;&gt;error&lt;/span&gt;) {
+   ...
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The implementation is a slight modification of the &lt;code&gt;ScanWords&lt;/code&gt; function. We
+detect word boundaries but keep appending the word to a tweet slice that we are
+building. The token boundary is imposed by checking that the append does not
+cause us to exceed the twitter character limit. The next token scan begins when
+we return the tweet built thus far.&lt;/p&gt;
+
+&lt;p&gt;Now we can start breaking any text into tweets with a simple &lt;code&gt;scanner.Scan()&lt;/code&gt;
+iteration as shown below.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34; style=&#34;background: #ffffff&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;font-weight: bold&#34;&gt;var&lt;/span&gt; longTweet = &lt;span style=&#34;font-style: italic&#34;&gt;`This is a long tweet that should be split into two separate&lt;/span&gt;
+&lt;span style=&#34;font-style: italic&#34;&gt;tweets using the splitter function of this project.  This should validate the&lt;/span&gt;
+&lt;span style=&#34;font-style: italic&#34;&gt;basic splitting check and perform a simple functional test.`&lt;/span&gt;
+
+&lt;span style=&#34;font-weight: bold&#34;&gt;var&lt;/span&gt; scanner = bufio.NewScanner(strings.NewReader(longTweet))
+scanner.Split(ScanTweets)
+&lt;span style=&#34;font-weight: bold&#34;&gt;for&lt;/span&gt; scanner.Scan() {
+  fmt.Println(scanner.Text())
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;As the tests show, the scanner takes anything that resembles a &lt;code&gt;Reader&lt;/code&gt;
+interface. So we can convert text files too into tweets using this newly
+written function.&lt;/p&gt;
+
+&lt;h2 id=&#34;part-2-web-application&#34;&gt;Part 2: Web application&lt;/h2&gt;
+
+&lt;p&gt;I started this blog using &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; - a static website
+generator written in Go. When doing that I encountered
+&lt;a href=&#34;https://golang.org/pkg/html/template/&#34;&gt;templates&lt;/a&gt;. Templates as the name
+suggests is a simple templating engine that is part of the Go standard
+libraries. The first implementation of Tweetpost therefore used the
+&lt;code&gt;html/template&lt;/code&gt; utilities to render the various pages with a simple form
+&lt;code&gt;POST&lt;/code&gt;. However, most modern web applications are written to do client side
+rendering to optimize bytes transferred.&lt;/p&gt;
+
+&lt;p&gt;So I decided to try and learn the full-blown MVC way to write my toy application.
+Information about Go specific layouts for an MVC app was littered with a lot of
+opinions and frameworks (which the Go community seems to abhor). The
+&lt;a href=&#34;https://github.com/avelino/awesome-go#web-frameworks&#34;&gt;awesome-go&lt;/a&gt; listings
+seem to have at least two dozen different frameworks
+and toolkits for the purpose. I picked something simple however.&lt;/p&gt;
+
+&lt;h3 id=&#34;innards&#34;&gt;Innards&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Layout&lt;/strong&gt;: Used the examples by &lt;a href=&#34;https://www.calhoun.io/creating-controllers-views-in-go/&#34;&gt;Jon Calhoun&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Routing&lt;/strong&gt;: For routing and the REST API I used &lt;a href=&#34;https://github.com/julienschmidt/httprouter&#34;&gt;httprouter&lt;/a&gt; for its simplicity&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Response/Templates&lt;/strong&gt;: &lt;code&gt;net/http&lt;/code&gt; for response writing with minimum use of &lt;code&gt;html/template&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Client Side&lt;/strong&gt;: &lt;a href=&#34;https://getbootstrap.com&#34;&gt;Bootstrap&lt;/a&gt; and jQuery&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;By far the most time consuming part for me was getting through jQuery and then
+through bootstrap. TBH I&amp;rsquo;ve never really written these from scratch but I&amp;rsquo;m
+glad I got digging and spent the time. Bootstrap seems amazing for creating
+beautiful content.&lt;/p&gt;
+
+&lt;p&gt;The app itself is straightforward with a single REST &lt;code&gt;/post&lt;/code&gt; endpoint that
+returns &lt;code&gt;JSON&lt;/code&gt; content. jQuery then uses bootstrap templates to render the
+split content.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34; style=&#34;background: #ffffff&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;➜  ~ curl -sL -X POST --data &lt;span style=&#34;font-style: italic&#34;&gt;&amp;#39;{ &amp;quot;text&amp;quot;: &amp;quot;Lorem ipsum dolor sit amet,&lt;/span&gt;
+&lt;span style=&#34;font-style: italic&#34;&gt;consectetur adipiscing elit. Phasellus sed cursus turpis. Integer at efficitur&lt;/span&gt;
+&lt;span style=&#34;font-style: italic&#34;&gt;diam. Suspendisse accumsan felis in mollis bibendum. Phasellus aliquam&lt;/span&gt;
+&lt;span style=&#34;font-style: italic&#34;&gt;tincidunt mauris, vitae porttitor tellus laoreet et. Suspendisse eu purus&lt;/span&gt;
+&lt;span style=&#34;font-style: italic&#34;&gt;dolor. Vivamus eu scelerisque tellus, in imperdiet justo. Aliquam erat&lt;/span&gt;
+&lt;span style=&#34;font-style: italic&#34;&gt;volutpat. Cras sit amet porta mi, at pharetra felis. Morbi congue, ex in&lt;/span&gt;
+&lt;span style=&#34;font-style: italic&#34;&gt;blandit iaculis, eros eros suscipit nibh, vitae vehicula nulla odio nec justo.&lt;/span&gt;
+&lt;span style=&#34;font-style: italic&#34;&gt;Integer augue tortor, tempor eget purus non, fringilla dapibus augue. Curabitur&lt;/span&gt;
+&lt;span style=&#34;font-style: italic&#34;&gt;tristique dui eget mattis faucibus. Nulla sed dictum risus, vitae hendrerit&lt;/span&gt;
+&lt;span style=&#34;font-style: italic&#34;&gt;eros.&amp;quot;}&amp;#39;&lt;/span&gt;  http://localhost:8080/post | jq .
+[
+  {
+    &lt;span style=&#34;font-style: italic&#34;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span style=&#34;font-style: italic&#34;&gt;&amp;quot;1/ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed cursus turpis. Integer at efficitur diam. Suspendisse accumsan&amp;quot;&lt;/span&gt;
+  },
+  {
+    &lt;span style=&#34;font-style: italic&#34;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span style=&#34;font-style: italic&#34;&gt;&amp;quot;2/ felis in mollis bibendum. Phasellus aliquam tincidunt mauris, vitae porttitor tellus laoreet et. Suspendisse eu purus dolor. Vivamus eu&amp;quot;&lt;/span&gt;
+  },
+  {
+    &lt;span style=&#34;font-style: italic&#34;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span style=&#34;font-style: italic&#34;&gt;&amp;quot;3/ scelerisque tellus, in imperdiet justo. Aliquam erat volutpat. Cras sit amet porta mi, at pharetra felis. Morbi congue, ex in blandit&amp;quot;&lt;/span&gt;
+  },
+  {
+    &lt;span style=&#34;font-style: italic&#34;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span style=&#34;font-style: italic&#34;&gt;&amp;quot;4/ iaculis, eros eros suscipit nibh, vitae vehicula nulla odio nec justo. Integer augue tortor, tempor eget purus non, fringilla dapibus&amp;quot;&lt;/span&gt;
+  },
+  {
+    &lt;span style=&#34;font-style: italic&#34;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span style=&#34;font-style: italic&#34;&gt;&amp;quot;5/ augue. Curabitur tristique dui eget mattis faucibus. Nulla sed dictum risus, vitae hendrerit eros.&amp;quot;&lt;/span&gt;
+  }
+]
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;It looks prettier when rendered on the browser.
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;/img/tweetpost.png&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Resumé</title>
