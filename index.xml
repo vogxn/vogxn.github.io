@@ -17,10 +17,7 @@
       <guid>/2017/04/tweetpost/</guid>
       <description>
 
-&lt;p&gt;I&amp;rsquo;ve spent the last month going through the fundamentals of building
-applications in Go. This is a blog post about what I learned.&lt;/p&gt;
-
-&lt;p&gt;I was first exposed to the language back in 2013 when I was working with &lt;a href=&#34;https://cloudstack.apache.org/&#34;&gt;Apache
+&lt;p&gt;I was first exposed to the Go language back in 2013 when I was working with &lt;a href=&#34;https://cloudstack.apache.org/&#34;&gt;Apache
 Cloudstack&lt;/a&gt;. At the time, I was using &lt;a href=&#34;https://github.com/mitchellh&#34;&gt;Mitchell
 Hashimoto&amp;rsquo;s&lt;/a&gt;
 &lt;a href=&#34;https://github.com/hashicorp/packer&#34;&gt;Packer&lt;/a&gt; for spinning up images in AWS.
