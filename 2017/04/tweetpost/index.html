@@ -399,7 +399,7 @@
   <h1> Tweetpost </h1>
 
   <div id=sub-header>
-    April 2017 · 5 minute read
+    April 2017 · 7 minute read
   </div>
 
   <div class="entry-content">
@@ -511,16 +511,53 @@ and toolkits for the purpose. I picked something simple however.</p>
 <li><strong>Routing</strong>: For routing and the REST API I used <a href="https://github.com/julienschmidt/httprouter">httprouter</a> for its simplicity</li>
 <li><strong>Response/Templates</strong>: <code>net/http</code> for response writing with minimum use of <code>html/template</code></li>
 <li><strong>Client Side</strong>: <a href="https://getbootstrap.com">Bootstrap</a> and jQuery</li>
+<li><strong>Configuration</strong>: Configuration is read and managed by <a href="https://github.com/spf13/viper">Viper</a></li>
+<li><strong>OAuth</strong>: Twitter OAuth is <em>attempted</em> using <a href="https://github.com/mrjones/oauth"><code>mrjones/oauth</code></a></li>
 </ul>
 
-<p>By far the most time consuming part for me was getting through jQuery and then
-through bootstrap. TBH I&rsquo;ve never really written these from scratch but I&rsquo;m
-glad I got digging and spent the time. Bootstrap seems amazing for creating
-beautiful content.</p>
+<p>I&rsquo;ve structured my MVC layout as shown. There may be many ways to do this but
+the split I&rsquo;ve used is such that each package is self-contained and performs
+all the functions in a single area. For eg: all the authorization with OAuth is
+done in the <code>auth</code> package. Page views are handled in the <code>views</code> package and
+routing in the <code>controllers</code> package</p>
 
-<p>The app itself is straightforward with a single REST <code>/post</code> endpoint that
-returns <code>JSON</code> content. jQuery then uses bootstrap templates to render the
-split content.</p>
+<pre><code>server
+├── auth
+│   └── credentials.go
+├── config
+│   └── settings.yaml
+├── controllers
+│   ├── post.go
+│   └── static.go
+├── main.go
+├── static
+│   ├── css
+│   ├── favicons
+│   └── js
+├── templates
+│   └── layouts
+│       ├── content.tmpl
+│       ├── footer.tmpl
+│       ├── header.tmpl
+└── views
+    └── page.go
+</code></pre>
+
+<p>You can start the web app by running <code>server/main.go</code>. All the configuration is
+read from the <code>config</code> directory where I store the OAuth keys. The
+<code>auth</code> package encapsulates the <code>TwitterAuth</code> type which is a reductive
+type from the full blown set of details needed for OAuth. After performing the
+OAuth dance an <code>HttpClient</code> is created with which you can access the Twitter API.</p>
+
+<p>The two routes that are exposed by the REST API are <code>/split</code> and <code>/tweet</code>.
+<code>split</code> will break down the text into tweets using the <code>ScanTweets(..)</code>
+function while <code>tweet</code> is expected to perform OAuth and post the tweets.
+Currently twitter OAuth is broken so this is not supported. But the necessary
+OAuth workflow is present in the <code>auth/credentials.go</code> file.</p>
+
+<p><em>Note: The app is incomplete because Twitter&rsquo;s 3-legged authorization is broken.</em> <sup class="footnote-ref" id="fnref:twitterbrokenoauth"><a rel="footnote" href="#fn:twitterbrokenoauth">1</a></sup></p>
+
+<p>Following shows a simple cURL call to break down tweet text.</p>
 <div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span>➜  ~ curl -sL -X POST --data <span style="font-style: italic">&#39;{ &quot;text&quot;: &quot;Lorem ipsum dolor sit amet,</span>
 <span style="font-style: italic">consectetur adipiscing elit. Phasellus sed cursus turpis. Integer at efficitur</span>
 <span style="font-style: italic">diam. Suspendisse accumsan felis in mollis bibendum. Phasellus aliquam</span>
@@ -550,7 +587,7 @@ split content.</p>
 ]
 </pre></div>
 
-<p>It looks prettier when rendered on the browser.
+<p>Here&rsquo;s a screenshot of the application.
 
 <figure >
     
@@ -560,7 +597,19 @@ split content.</p>
 </figure>
 </p>
 
-<p>Checkout the project on github - <a href="https://github.com/vogxn/tweetpost.git">Tweetpost</a>.</p>
+<p>Checkout the project on github -
+<a href="https://github.com/vogxn/tweetpost.git">Tweetpost</a>. Since this is my first Go
+webapp, I welcome comments and feedback on whether I&rsquo;ve stuck to Idiomatic Go
+syntax and convention.</p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:twitterbrokenoauth">Twitter authorization fails <a href="http://stackoverflow.com/q/35879943/1297846">CORS preflight</a> in a browser
+ <a class="footnote-return" href="#fnref:twitterbrokenoauth"><sup>[return]</sup></a></li>
+</ol>
+</div>
 
   </div>
 

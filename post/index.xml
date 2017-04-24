@@ -123,16 +123,53 @@ and toolkits for the purpose. I picked something simple however.&lt;/p&gt;
 &lt;li&gt;&lt;strong&gt;Routing&lt;/strong&gt;: For routing and the REST API I used &lt;a href=&#34;https://github.com/julienschmidt/httprouter&#34;&gt;httprouter&lt;/a&gt; for its simplicity&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Response/Templates&lt;/strong&gt;: &lt;code&gt;net/http&lt;/code&gt; for response writing with minimum use of &lt;code&gt;html/template&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Client Side&lt;/strong&gt;: &lt;a href=&#34;https://getbootstrap.com&#34;&gt;Bootstrap&lt;/a&gt; and jQuery&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Configuration&lt;/strong&gt;: Configuration is read and managed by &lt;a href=&#34;https://github.com/spf13/viper&#34;&gt;Viper&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;OAuth&lt;/strong&gt;: Twitter OAuth is &lt;em&gt;attempted&lt;/em&gt; using &lt;a href=&#34;https://github.com/mrjones/oauth&#34;&gt;&lt;code&gt;mrjones/oauth&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;By far the most time consuming part for me was getting through jQuery and then
-through bootstrap. TBH I&amp;rsquo;ve never really written these from scratch but I&amp;rsquo;m
-glad I got digging and spent the time. Bootstrap seems amazing for creating
-beautiful content.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ve structured my MVC layout as shown. There may be many ways to do this but
+the split I&amp;rsquo;ve used is such that each package is self-contained and performs
+all the functions in a single area. For eg: all the authorization with OAuth is
+done in the &lt;code&gt;auth&lt;/code&gt; package. Page views are handled in the &lt;code&gt;views&lt;/code&gt; package and
+routing in the &lt;code&gt;controllers&lt;/code&gt; package&lt;/p&gt;
 
-&lt;p&gt;The app itself is straightforward with a single REST &lt;code&gt;/post&lt;/code&gt; endpoint that
-returns &lt;code&gt;JSON&lt;/code&gt; content. jQuery then uses bootstrap templates to render the
-split content.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;server
+├── auth
+│   └── credentials.go
+├── config
+│   └── settings.yaml
+├── controllers
+│   ├── post.go
+│   └── static.go
+├── main.go
+├── static
+│   ├── css
+│   ├── favicons
+│   └── js
+├── templates
+│   └── layouts
+│       ├── content.tmpl
+│       ├── footer.tmpl
+│       ├── header.tmpl
+└── views
+    └── page.go
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can start the web app by running &lt;code&gt;server/main.go&lt;/code&gt;. All the configuration is
+read from the &lt;code&gt;config&lt;/code&gt; directory where I store the OAuth keys. The
+&lt;code&gt;auth&lt;/code&gt; package encapsulates the &lt;code&gt;TwitterAuth&lt;/code&gt; type which is a reductive
+type from the full blown set of details needed for OAuth. After performing the
+OAuth dance an &lt;code&gt;HttpClient&lt;/code&gt; is created with which you can access the Twitter API.&lt;/p&gt;
+
+&lt;p&gt;The two routes that are exposed by the REST API are &lt;code&gt;/split&lt;/code&gt; and &lt;code&gt;/tweet&lt;/code&gt;.
+&lt;code&gt;split&lt;/code&gt; will break down the text into tweets using the &lt;code&gt;ScanTweets(..)&lt;/code&gt;
+function while &lt;code&gt;tweet&lt;/code&gt; is expected to perform OAuth and post the tweets.
+Currently twitter OAuth is broken so this is not supported. But the necessary
+OAuth workflow is present in the &lt;code&gt;auth/credentials.go&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Note: The app is incomplete because Twitter&amp;rsquo;s 3-legged authorization is broken.&lt;/em&gt; &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:twitterbrokenoauth&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:twitterbrokenoauth&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;Following shows a simple cURL call to break down tweet text.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34; style=&#34;background: #ffffff&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;➜  ~ curl -sL -X POST --data &lt;span style=&#34;font-style: italic&#34;&gt;&amp;#39;{ &amp;quot;text&amp;quot;: &amp;quot;Lorem ipsum dolor sit amet,&lt;/span&gt;
 &lt;span style=&#34;font-style: italic&#34;&gt;consectetur adipiscing elit. Phasellus sed cursus turpis. Integer at efficitur&lt;/span&gt;
 &lt;span style=&#34;font-style: italic&#34;&gt;diam. Suspendisse accumsan felis in mollis bibendum. Phasellus aliquam&lt;/span&gt;
@@ -162,7 +199,7 @@ split content.&lt;/p&gt;
 ]
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;It looks prettier when rendered on the browser.
+&lt;p&gt;Here&amp;rsquo;s a screenshot of the application.
 
 &lt;figure &gt;
     
@@ -172,7 +209,19 @@ split content.&lt;/p&gt;
 &lt;/figure&gt;
 &lt;/p&gt;
 
-&lt;p&gt;Checkout the project on github - &lt;a href=&#34;https://github.com/vogxn/tweetpost.git&#34;&gt;Tweetpost&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Checkout the project on github -
+&lt;a href=&#34;https://github.com/vogxn/tweetpost.git&#34;&gt;Tweetpost&lt;/a&gt;. Since this is my first Go
+webapp, I welcome comments and feedback on whether I&amp;rsquo;ve stuck to Idiomatic Go
+syntax and convention.&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:twitterbrokenoauth&#34;&gt;Twitter authorization fails &lt;a href=&#34;http://stackoverflow.com/q/35879943/1297846&#34;&gt;CORS preflight&lt;/a&gt; in a browser
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:twitterbrokenoauth&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
 </description>
     </item>
     
