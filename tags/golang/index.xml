@@ -2,11 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Golang on Prasanna&#39;s blog</title>
-    <link>/tags/golang/index.xml</link>
+    <link>/tags/golang/</link>
     <description>Recent content in Golang on Prasanna&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <atom:link href="/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 19 Apr 2017 17:32:37 +0530</lastBuildDate>
+    
+	<atom:link href="/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Tweetpost</title>
@@ -14,211 +17,8 @@
       <pubDate>Wed, 19 Apr 2017 17:32:37 +0530</pubDate>
       
       <guid>/2017/04/tweetpost/</guid>
-      <description>
-
-&lt;p&gt;I was first exposed to the Go language back in 2013 when I was working with &lt;a href=&#34;https://cloudstack.apache.org/&#34;&gt;Apache
-Cloudstack&lt;/a&gt;. At the time, I was using &lt;a href=&#34;https://github.com/mitchellh&#34;&gt;Mitchell
-Hashimoto&amp;rsquo;s&lt;/a&gt;
-&lt;a href=&#34;https://github.com/hashicorp/packer&#34;&gt;Packer&lt;/a&gt; for spinning up images in AWS.
-However, a switch of jobs took me in a different direction and I never delved
-deeper. Now, I&amp;rsquo;ve finally found some time to experiment with Go again.&lt;/p&gt;
-
-&lt;h3 id=&#34;language-review&#34;&gt;Language Review&lt;/h3&gt;
-
-&lt;p&gt;I went back to review the language using the excellent
-&lt;a href=&#34;https://golang.org&#34;&gt;golang&lt;/a&gt; website. The golang
-&lt;a href=&#34;https://tour.golang.org/&#34;&gt;tour&lt;/a&gt; was my first stop where I found the examples
-have been improved - channels and concurrency are explained much better. But
-this isn&amp;rsquo;t nearly enough reading to build anything useful yet. As recommended,
-I went through the wonderful applied language tutorial at
-&lt;a href=&#34;https://appliedgo.net/&#34;&gt;appliedgo.net&lt;/a&gt; and the standard libraries, all the
-while being reminded that &lt;a href=&#34;https://golang.org/doc/effective_go.html&#34;&gt;Idiomatic
-Go&lt;/a&gt; is the style that all Golang
-programmers should aspire to write.&lt;/p&gt;
-
-&lt;h3 id=&#34;the-project&#34;&gt;The Project&lt;/h3&gt;
-
-&lt;p&gt;I wanted to apply my learning to build a web application. I&amp;rsquo;ve traditionally
-built more command line driven tools over the years and have lost touch with
-the web.&lt;/p&gt;
-
-&lt;p&gt;My pet project was very simple, in fact, it wasn&amp;rsquo;t even something novel. But
-what the heck? I wanted to build it with Go. And hence we have &lt;a href=&#34;https://github.com/vogxn/tweetpost.git&#34;&gt;Tweetpost&lt;/a&gt;.
-Tweetpost is yet another of those online tools to help you rant on the internet
-via your Twitter account. In that sense it&amp;rsquo;s probably a poor version of
-&lt;a href=&#34;http://tweetstorm.io&#34;&gt;Tweetstorm&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;part-1-tokenizer&#34;&gt;Part 1: Tokenizer&lt;/h2&gt;
-
-&lt;p&gt;The first part was simply breaking down text into tokens so the total length
-did not exceed Twitter character limits. Now you can write this using basic
-arrays and string manipulation without much fuss. But Go&amp;rsquo;s interfaces are
-powerful. The Go community will often stress on the virtues of the
-&lt;a href=&#34;https://golang.org/pkg/io/#Reader&#34;&gt;&lt;code&gt;Reader&lt;/code&gt;&lt;/a&gt; and
-&lt;a href=&#34;https://golang.org/pkg/io/#Reader&#34;&gt;&lt;code&gt;Writer&lt;/code&gt;&lt;/a&gt; interfaces and how widely they
-are applied through the standard library for a myriad functions. So I went
-looking to see if there was something that could assist in text tokenization.
-And there it was - &lt;a href=&#34;https://golang.org/pkg/text/scanner/&#34;&gt;&lt;code&gt;Scanner&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;The &lt;code&gt;Scanner&lt;/code&gt; interface is implemented by &lt;code&gt;bufio&lt;/code&gt; package to break text into
-tokens of words, lines and runes. In order to adapt this for splitting tweets I
-had to implement a &lt;a href=&#34;https://golang.org/pkg/bufio/#SplitFunc&#34;&gt;&lt;code&gt;SplitFunc&lt;/code&gt;&lt;/a&gt;
-function. The signature of which looks as shown:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34; style=&#34;background: #ffffff&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;font-style: italic&#34;&gt;// ScanTweets is a split function for a Scanner that returns a sequence of&lt;/span&gt;
-&lt;span style=&#34;font-style: italic&#34;&gt;// tweets, each tweet not more than TWEET_CHAR_LIMIT(140) characters in length.&lt;/span&gt;
-&lt;span style=&#34;font-weight: bold&#34;&gt;func&lt;/span&gt; ScanTweets(data []&lt;span style=&#34;font-weight: bold&#34;&gt;byte&lt;/span&gt;, atEOF &lt;span style=&#34;font-weight: bold&#34;&gt;bool&lt;/span&gt;) (advance &lt;span style=&#34;font-weight: bold&#34;&gt;int&lt;/span&gt;, token []&lt;span style=&#34;font-weight: bold&#34;&gt;byte&lt;/span&gt;, err &lt;span style=&#34;font-weight: bold&#34;&gt;error&lt;/span&gt;) {
-   ...
-}
-&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;The implementation is a slight modification of the &lt;code&gt;ScanWords&lt;/code&gt; function. We
-detect word boundaries but keep appending the word to a tweet slice that we are
-building. The token boundary is imposed by checking that the append does not
-cause us to exceed the twitter character limit. The next token scan begins when
-we return the tweet built thus far.&lt;/p&gt;
-
-&lt;p&gt;Now we can start breaking any text into tweets with a simple &lt;code&gt;scanner.Scan()&lt;/code&gt;
-iteration as shown below.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34; style=&#34;background: #ffffff&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;font-weight: bold&#34;&gt;var&lt;/span&gt; longTweet = &lt;span style=&#34;font-style: italic&#34;&gt;`This is a long tweet that should be split into two separate&lt;/span&gt;
-&lt;span style=&#34;font-style: italic&#34;&gt;tweets using the splitter function of this project.  This should validate the&lt;/span&gt;
-&lt;span style=&#34;font-style: italic&#34;&gt;basic splitting check and perform a simple functional test.`&lt;/span&gt;
-
-&lt;span style=&#34;font-weight: bold&#34;&gt;var&lt;/span&gt; scanner = bufio.NewScanner(strings.NewReader(longTweet))
-scanner.Split(ScanTweets)
-&lt;span style=&#34;font-weight: bold&#34;&gt;for&lt;/span&gt; scanner.Scan() {
-  fmt.Println(scanner.Text())
-}
-&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;As the tests show, the scanner takes anything that resembles a &lt;code&gt;Reader&lt;/code&gt;
-interface. So we can convert text files too into tweets using this newly
-written function.&lt;/p&gt;
-
-&lt;h2 id=&#34;part-2-web-application&#34;&gt;Part 2: Web application&lt;/h2&gt;
-
-&lt;p&gt;I started this blog using &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; - a static website
-generator written in Go. When doing that I encountered
-&lt;a href=&#34;https://golang.org/pkg/html/template/&#34;&gt;templates&lt;/a&gt;. Templates as the name
-suggests is a simple templating engine that is part of the Go standard
-libraries. The first implementation of Tweetpost therefore used the
-&lt;code&gt;html/template&lt;/code&gt; utilities to render the various pages with a simple form
-&lt;code&gt;POST&lt;/code&gt;. However, most modern web applications are written to do client side
-rendering to optimize bytes transferred.&lt;/p&gt;
-
-&lt;p&gt;So I decided to try and learn the full-blown MVC way to write my toy application.
-Information about Go specific layouts for an MVC app was littered with a lot of
-opinions and frameworks (which the Go community seems to abhor). The
-&lt;a href=&#34;https://github.com/avelino/awesome-go#web-frameworks&#34;&gt;awesome-go&lt;/a&gt; listings
-seem to have at least two dozen different frameworks
-and toolkits for the purpose. I picked something simple however.&lt;/p&gt;
-
-&lt;h3 id=&#34;innards&#34;&gt;Innards&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Layout&lt;/strong&gt;: Used the examples by &lt;a href=&#34;https://www.calhoun.io/creating-controllers-views-in-go/&#34;&gt;Jon Calhoun&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Routing&lt;/strong&gt;: For routing and the REST API I used &lt;a href=&#34;https://github.com/julienschmidt/httprouter&#34;&gt;httprouter&lt;/a&gt; for its simplicity&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Response/Templates&lt;/strong&gt;: &lt;code&gt;net/http&lt;/code&gt; for response writing with minimum use of &lt;code&gt;html/template&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Client Side&lt;/strong&gt;: &lt;a href=&#34;https://getbootstrap.com&#34;&gt;Bootstrap&lt;/a&gt; and jQuery&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Configuration&lt;/strong&gt;: Configuration is read and managed by &lt;a href=&#34;https://github.com/spf13/viper&#34;&gt;Viper&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;OAuth&lt;/strong&gt;: Twitter OAuth is &lt;em&gt;attempted&lt;/em&gt; using &lt;a href=&#34;https://github.com/mrjones/oauth&#34;&gt;&lt;code&gt;mrjones/oauth&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;I&amp;rsquo;ve structured my MVC layout as shown. There may be many ways to do this but
-the split I&amp;rsquo;ve used is such that each package is self-contained and performs
-all the functions in a single area. For eg: all the authorization with OAuth is
-done in the &lt;code&gt;auth&lt;/code&gt; package. Page views are handled in the &lt;code&gt;views&lt;/code&gt; package and
-routing in the &lt;code&gt;controllers&lt;/code&gt; package&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;server
-├── auth
-│   └── credentials.go
-├── config
-│   └── settings.yaml
-├── controllers
-│   ├── post.go
-│   └── static.go
-├── main.go
-├── static
-│   ├── css
-│   ├── favicons
-│   └── js
-├── templates
-│   └── layouts
-│       ├── content.tmpl
-│       ├── footer.tmpl
-│       ├── header.tmpl
-└── views
-    └── page.go
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;You can start the web app by running &lt;code&gt;server/main.go&lt;/code&gt;. All the configuration is
-read from the &lt;code&gt;config&lt;/code&gt; directory where I store the OAuth keys. The
-&lt;code&gt;auth&lt;/code&gt; package encapsulates the &lt;code&gt;TwitterAuth&lt;/code&gt; type which is a reductive
-type from the full blown set of details needed for OAuth. After performing the
-OAuth dance an &lt;code&gt;HttpClient&lt;/code&gt; is created with which you can access the Twitter API.&lt;/p&gt;
-
-&lt;p&gt;The two routes that are exposed by the REST API are &lt;code&gt;/split&lt;/code&gt; and &lt;code&gt;/tweet&lt;/code&gt;.
-&lt;code&gt;split&lt;/code&gt; will break down the text into tweets using the &lt;code&gt;ScanTweets(..)&lt;/code&gt;
-function while &lt;code&gt;tweet&lt;/code&gt; is expected to perform OAuth and post the tweets.
-Currently twitter OAuth is broken so this is not supported. But the necessary
-OAuth workflow is present in the &lt;code&gt;auth/credentials.go&lt;/code&gt; file.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Note: The app is incomplete because Twitter&amp;rsquo;s 3-legged authorization is broken.&lt;/em&gt; &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:twitterbrokenoauth&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:twitterbrokenoauth&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;p&gt;Following shows a simple cURL call to break down tweet text.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34; style=&#34;background: #ffffff&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;➜  ~ curl -sL -X POST --data &lt;span style=&#34;font-style: italic&#34;&gt;&amp;#39;{ &amp;quot;text&amp;quot;: &amp;quot;Lorem ipsum dolor sit amet,&lt;/span&gt;
-&lt;span style=&#34;font-style: italic&#34;&gt;consectetur adipiscing elit. Phasellus sed cursus turpis. Integer at efficitur&lt;/span&gt;
-&lt;span style=&#34;font-style: italic&#34;&gt;diam. Suspendisse accumsan felis in mollis bibendum. Phasellus aliquam&lt;/span&gt;
-&lt;span style=&#34;font-style: italic&#34;&gt;tincidunt mauris, vitae porttitor tellus laoreet et. Suspendisse eu purus&lt;/span&gt;
-&lt;span style=&#34;font-style: italic&#34;&gt;dolor. Vivamus eu scelerisque tellus, in imperdiet justo. Aliquam erat&lt;/span&gt;
-&lt;span style=&#34;font-style: italic&#34;&gt;volutpat. Cras sit amet porta mi, at pharetra felis. Morbi congue, ex in&lt;/span&gt;
-&lt;span style=&#34;font-style: italic&#34;&gt;blandit iaculis, eros eros suscipit nibh, vitae vehicula nulla odio nec justo.&lt;/span&gt;
-&lt;span style=&#34;font-style: italic&#34;&gt;Integer augue tortor, tempor eget purus non, fringilla dapibus augue. Curabitur&lt;/span&gt;
-&lt;span style=&#34;font-style: italic&#34;&gt;tristique dui eget mattis faucibus. Nulla sed dictum risus, vitae hendrerit&lt;/span&gt;
-&lt;span style=&#34;font-style: italic&#34;&gt;eros.&amp;quot;}&amp;#39;&lt;/span&gt;  http://localhost:8080/post | jq .
-[
-  {
-    &lt;span style=&#34;font-style: italic&#34;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span style=&#34;font-style: italic&#34;&gt;&amp;quot;1/ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed cursus turpis. Integer at efficitur diam. Suspendisse accumsan&amp;quot;&lt;/span&gt;
-  },
-  {
-    &lt;span style=&#34;font-style: italic&#34;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span style=&#34;font-style: italic&#34;&gt;&amp;quot;2/ felis in mollis bibendum. Phasellus aliquam tincidunt mauris, vitae porttitor tellus laoreet et. Suspendisse eu purus dolor. Vivamus eu&amp;quot;&lt;/span&gt;
-  },
-  {
-    &lt;span style=&#34;font-style: italic&#34;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span style=&#34;font-style: italic&#34;&gt;&amp;quot;3/ scelerisque tellus, in imperdiet justo. Aliquam erat volutpat. Cras sit amet porta mi, at pharetra felis. Morbi congue, ex in blandit&amp;quot;&lt;/span&gt;
-  },
-  {
-    &lt;span style=&#34;font-style: italic&#34;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span style=&#34;font-style: italic&#34;&gt;&amp;quot;4/ iaculis, eros eros suscipit nibh, vitae vehicula nulla odio nec justo. Integer augue tortor, tempor eget purus non, fringilla dapibus&amp;quot;&lt;/span&gt;
-  },
-  {
-    &lt;span style=&#34;font-style: italic&#34;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span style=&#34;font-style: italic&#34;&gt;&amp;quot;5/ augue. Curabitur tristique dui eget mattis faucibus. Nulla sed dictum risus, vitae hendrerit eros.&amp;quot;&lt;/span&gt;
-  }
-]
-&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Here&amp;rsquo;s a screenshot of the application.
-
-&lt;figure &gt;
-    
-        &lt;img src=&#34;/img/tweetpost.png&#34; /&gt;
-    
-    
-&lt;/figure&gt;
-&lt;/p&gt;
-
-&lt;p&gt;Checkout the project on github -
-&lt;a href=&#34;https://github.com/vogxn/tweetpost.git&#34;&gt;Tweetpost&lt;/a&gt;. Since this is my first Go
-webapp, I welcome comments and feedback on whether I&amp;rsquo;ve stuck to Idiomatic Go
-syntax and convention.&lt;/p&gt;
-&lt;div class=&#34;footnotes&#34;&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li id=&#34;fn:twitterbrokenoauth&#34;&gt;Twitter authorization fails &lt;a href=&#34;http://stackoverflow.com/q/35879943/1297846&#34;&gt;CORS preflight&lt;/a&gt; in a browser
- &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:twitterbrokenoauth&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-</description>
+      <description>I was first exposed to the Go language back in 2013 when I was working with Apache Cloudstack. At the time, I was using Mitchell Hashimoto&amp;rsquo;s Packer for spinning up images in AWS. However, a switch of jobs took me in a different direction and I never delved deeper. Now, I&amp;rsquo;ve finally found some time to experiment with Go again.
+Language Review I went back to review the language using the excellent golang website.</description>
     </item>
     
   </channel>

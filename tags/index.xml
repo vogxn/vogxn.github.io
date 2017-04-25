@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Prasanna&#39;s blog</title>
+    <link>/tags/</link>
+    <description>Recent content in Tags on Prasanna&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 31 Mar 2017 12:06:38 +0530</lastBuildDate>
+    
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>About</title>
+      <link>/tags/about/</link>
+      <pubDate>Fri, 31 Mar 2017 12:06:38 +0530</pubDate>
+      
+      <guid>/tags/about/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Golang</title>
+      <link>/tags/golang/</link>
+      <pubDate>Wed, 19 Apr 2017 17:32:37 +0530</pubDate>
+      
+      <guid>/tags/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tweetpost</title>
+      <link>/tags/tweetpost/</link>
+      <pubDate>Wed, 19 Apr 2017 17:32:37 +0530</pubDate>
+      
+      <guid>/tags/tweetpost/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Webapp</title>
+      <link>/tags/webapp/</link>
+      <pubDate>Wed, 19 Apr 2017 17:32:37 +0530</pubDate>
+      
+      <guid>/tags/webapp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Welcome</title>
+      <link>/tags/welcome/</link>
+      <pubDate>Fri, 31 Mar 2017 12:06:38 +0530</pubDate>
+      
+      <guid>/tags/welcome/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
