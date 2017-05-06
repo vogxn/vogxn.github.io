@@ -6,10 +6,20 @@
     <description>Recent content in Posts on Prasanna&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 19 Apr 2017 17:32:37 +0530</lastBuildDate>
+    <lastBuildDate>Sat, 06 May 2017 10:00:58 +0530</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Pitfalls in session management</title>
+      <link>/2017/05/pitfalls-in-session-management/</link>
+      <pubDate>Sat, 06 May 2017 10:00:58 +0530</pubDate>
+      
+      <guid>/2017/05/pitfalls-in-session-management/</guid>
+      <description>This is a quick post that talks about the usage of sessions in web applications. Sessions is not a new topic for those who&amp;rsquo;ve used the basic web applications that require a login. Sessions are necessary to overcome the stateless nature of HTTP. They do this by utilising the cookie mechanism of most modern web browsers.
+A Sessions Analogy In simple terms, a session is used to identify and resume conversation with the service where one left off previously.</description>
+    </item>
     
     <item>
       <title>Tweetpost</title>

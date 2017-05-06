@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Golang on Prasanna&#39;s blog</title>
-    <link>/tags/golang/</link>
-    <description>Recent content in Golang on Prasanna&#39;s blog</description>
+    <title>Sessions on Prasanna&#39;s blog</title>
+    <link>/tags/sessions/</link>
+    <description>Recent content in Sessions on Prasanna&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sat, 06 May 2017 10:00:58 +0530</lastBuildDate>
     
-	<atom:link href="/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/sessions/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -19,16 +19,6 @@
       <guid>/2017/05/pitfalls-in-session-management/</guid>
       <description>This is a quick post that talks about the usage of sessions in web applications. Sessions is not a new topic for those who&amp;rsquo;ve used the basic web applications that require a login. Sessions are necessary to overcome the stateless nature of HTTP. They do this by utilising the cookie mechanism of most modern web browsers.
 A Sessions Analogy In simple terms, a session is used to identify and resume conversation with the service where one left off previously.</description>
-    </item>
-    
-    <item>
-      <title>Tweetpost</title>
-      <link>/2017/04/tweetpost/</link>
-      <pubDate>Wed, 19 Apr 2017 17:32:37 +0530</pubDate>
-      
-      <guid>/2017/04/tweetpost/</guid>
-      <description>I was first exposed to the Go language back in 2013 when I was working with Apache Cloudstack. At the time, I was using Mitchell Hashimoto&amp;rsquo;s Packer for spinning up images in AWS. However, a switch of jobs took me in a different direction and I never delved deeper. Now, I&amp;rsquo;ve finally found some time to experiment with Go again.
-Language Review I went back to review the language using the excellent golang website.</description>
     </item>
     
   </channel>

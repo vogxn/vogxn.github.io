@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>/2017/05/pitfalls-in-session-management/</loc>
+    <lastmod>2017-05-06T10:00:58+05:30</lastmod>
+  </url>
+  
+  <url>
     <loc>/2017/04/tweetpost/</loc>
     <lastmod>2017-04-19T17:32:37+05:30</lastmod>
   </url>
@@ -34,19 +39,31 @@
   
   <url>
     <loc>/tags/golang/</loc>
-    <lastmod>2017-04-19T17:32:37+05:30</lastmod>
+    <lastmod>2017-05-06T10:00:58+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/gorilla/</loc>
+    <lastmod>2017-05-06T10:00:58+05:30</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2017-04-19T17:32:37+05:30</lastmod>
+    <lastmod>2017-05-06T10:00:58+05:30</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/</loc>
-    <lastmod>2017-04-19T17:32:37+05:30</lastmod>
+    <lastmod>2017-05-06T10:00:58+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/sessions/</loc>
+    <lastmod>2017-05-06T10:00:58+05:30</lastmod>
     <priority>0</priority>
   </url>
   
@@ -65,6 +82,12 @@
   <url>
     <loc>/tags/webapp/</loc>
     <lastmod>2017-04-19T17:32:37+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/webapps/</loc>
+    <lastmod>2017-05-06T10:00:58+05:30</lastmod>
     <priority>0</priority>
   </url>
   

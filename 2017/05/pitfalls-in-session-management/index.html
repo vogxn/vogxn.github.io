@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <base href="/">
+    
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400|Old+Standard+TT:400' rel='stylesheet' type='text/css'>
+
+    <link rel="icon" type="image/png" href="/favicon_16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon_32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon_128x128.png" sizes="128x128">
+
+    <title>
+      
+      
+         Pitfalls in session management 
+      
+    </title>
+    <link rel="canonical" href="/2017/05/pitfalls-in-session-management/">
+
+    <style>
+  * {
+    border:0;
+    font:inherit;
+    font-size:100%;
+    vertical-align:baseline;
+    margin:0;
+    padding:0;
+    color: black;
+  }
+
+  body {
+    font-family:'Open Sans', 'Myriad Pro', Myriad, sans-serif;
+    font-size:17px;
+    line-height:160%;
+    color:#1d1313;
+    max-width:700px;
+    margin:auto;
+  }
+
+  p {
+    margin: 20px 0;
+  }
+
+  a img {
+    border:none;
+  }
+
+  img {
+    margin: 10px auto 10px auto;
+    max-width: 100%;
+    display: block;
+  }
+
+  pre, code {
+    font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    background-color: #f7f7f7;
+  }
+
+  code {
+    font-size: 12px;
+    padding: 4px;
+  }
+
+  pre {
+    margin-top: 0;
+    margin-bottom: 16px;
+    word-wrap: normal;
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+  }
+
+  pre>code {
+    padding: 0;
+    margin: 0;
+    font-size: 100%;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
+    border: 0;
+  }
+
+  pre code {
+    display: inline;
+    max-width: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
+  }
+
+  pre code::before,
+  pre code::after {
+    content: normal;
+  }
+
+  em,q,em,dfn {
+    font-style:italic;
+  }
+
+  .sans,html .gist .gist-file .gist-meta {
+    font-family:"Open Sans","Myriad Pro",Myriad,sans-serif;
+  }
+
+  .mono,pre,code,tt,p code,li code {
+    font-family:Menlo,Monaco,"Andale Mono","lucida console","Courier New",monospace;
+  }
+
+  .heading,.serif,h1,h2,h3 {
+    font-family:"Old Standard TT",serif;
+  }
+
+  strong {
+    font-weight:600;
+  }
+
+  q:before {
+    content:"\201C";
+  }
+
+  q:after {
+    content:"\201D";
+  }
+
+  del,s {
+    text-decoration:line-through;
+  }
+
+  blockquote {
+    font-family:"Old Standard TT",serif;
+    text-align:center;
+    padding:50px;
+  }
+
+  blockquote p {
+    display:inline-block;
+    font-style:italic;
+  }
+
+  blockquote:before,blockquote:after {
+    font-family:"Old Standard TT",serif;
+    content:'\201C';
+    font-size:35px;
+    color:#403c3b;
+  }
+
+  blockquote:after {
+    content:'\201D';
+  }
+
+  hr {
+    width:40%;
+    height: 1px;
+    background:#403c3b;
+    margin: 25px auto;
+  }
+
+  h1 {
+    font-size:35px;
+  }
+
+  h2 {
+    font-size:28px;
+  }
+
+  h3 {
+    font-size:22px;
+    margin-top:18px;
+  }
+
+  h1 a,h2 a,h3 a {
+    text-decoration:none;
+  }
+
+  h1,h2 {
+    margin-top:28px;
+  }
+
+  #sub-header, time {
+    color:#403c3b;
+    font-size:13px;
+  }
+
+  #sub-header {
+    margin: 0 4px;
+  }
+
+  #nav h1 a {
+    font-size:35px;
+    color:#1d1313;
+    line-height:120%;
+  }
+
+  .posts_listing a,#nav a {
+    text-decoration: none;
+  }
+
+  li {
+    margin-left: 20px;
+  }
+
+  ul li {
+    margin-left: 5px;
+  }
+
+  ul li {
+    list-style-type: none;
+  }
+  ul li:before {
+    content:"\00BB \0020";
+  }
+
+  #nav ul li:before, .posts_listing li:before {
+    content:'';
+    margin-right:0;
+  }
+
+  #content {
+    text-align:left;
+    width:100%;
+    font-size:15px;
+    padding:60px 0 80px;
+  }
+
+  #content h1,#content h2 {
+    margin-bottom:5px;
+  }
+
+  #content h2 {
+    font-size:25px;
+  }
+
+  #content .entry-content {
+    margin-top:15px;
+  }
+
+  #content time {
+    margin-left:3px;
+  }
+
+  #content h1 {
+    font-size:30px;
+  }
+
+  .highlight {
+    margin: 10px 0;
+  }
+
+  .posts_listing {
+    margin:0 0 50px;
+  }
+
+  .posts_listing li {
+    margin:0 0 25px 15px;
+  }
+
+  .posts_listing li a:hover,#nav a:hover {
+    text-decoration: underline;
+  }
+
+  #nav {
+    text-align:center;
+    position:static;
+    margin-top:60px;
+  }
+
+  #nav ul {
+    display: table;
+    margin: 8px auto 0 auto;
+  }
+
+  #nav li {
+    list-style-type:none;
+    display:table-cell;
+    font-size:15px;
+    padding: 0 20px;
+  }
+
+  #links {
+    margin: 50px 0 0 0;
+  }
+
+  #links :nth-child(2) {
+    float:right;
+  }
+
+  #not-found {
+    text-align: center;
+  }
+
+  #not-found a {
+    font-family:"Old Standard TT",serif;
+    font-size: 200px;
+    text-decoration: none;
+    display: inline-block;
+    padding-top: 225px;
+  }
+
+  @media (max-width: 750px) {
+    body {
+      padding-left:20px;
+      padding-right:20px;
+    }
+
+    #nav h1 a {
+      font-size:28px;
+    }
+
+    #nav li {
+      font-size:13px;
+      padding: 0 15px;
+    }
+
+    #content {
+      margin-top:0;
+      padding-top:50px;
+      font-size:14px;
+    }
+
+    #content h1 {
+      font-size:25px;
+    }
+
+    #content h2 {
+      font-size:22px;
+    }
+
+    .posts_listing li div {
+      font-size:12px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    body {
+      padding-left:20px;
+      padding-right:20px;
+    }
+
+    #nav h1 a {
+      font-size:22px;
+    }
+
+    #nav li {
+      font-size:12px;
+      padding: 0 10px;
+    }
+
+    #content {
+      margin-top:0;
+      padding-top:20px;
+      font-size:12px;
+    }
+
+    #content h1 {
+      font-size:20px;
+    }
+
+    #content h2 {
+      font-size:18px;
+    }
+
+    .posts_listing li div{
+      font-size:12px;
+    }
+  }
+</style>
+
+
+    
+  </head>
+
+  <body>
+    <section id=nav>
+      <h1><a href="/">Prasanna&#39;s Blog</a></h1>
+      <ul>
+        
+          <li><a href="about/index.html">About</a></li>
+        
+          <li><a href="https://github.com/vogxn">Projects</a></li>
+        
+          <li><a href="resum%c3%a9/index.html">Resumé</a></li>
+        
+      </ul>
+    </section>
+
+
+<section id=content>
+  <h1> Pitfalls in session management </h1>
+
+  <div id=sub-header>
+    May 2017 · 4 minute read
+  </div>
+
+  <div class="entry-content">
+    
+
+<p>This is a quick post that talks about the usage of sessions in web
+applications. Sessions is not a new topic for those who&rsquo;ve used the basic web
+applications that require a login. Sessions are necessary to overcome the
+stateless nature of HTTP. They do this by utilising the cookie mechanism of
+most modern web browsers.</p>
+
+<h3 id="a-sessions-analogy">A Sessions Analogy</h3>
+
+<p>In simple terms, a session is used to identify and resume conversation with the
+service where one left off previously. Anecdotally, imagine you went to a bank
+to fill out a withdrawal form. You fill the form halfway only to be told by the
+teller that you&rsquo;ve forgotten to include a copy of your proof of identity. So
+you go back and return later to complete the withdrawal. Now, there are a few
+ways to do this:</p>
+
+<ol>
+<li>You take your form with you and return with the proof of identity</li>
+<li>You let the teller keep the incomplete form and return with the proof of identity</li>
+<li>The teller keeps your incomplete form and gives you a token so he can retrieve the form from his filer later</li>
+</ol>
+
+<p>Granted, this is a little contrived. But in cases 1. and 2. there is potential
+for data loss (<em>you or the teller loses the form</em>). And since we all hate
+filling forms, the token approach is better suited as the form is kept in
+(<em>presumably</em>) safekeeping.</p>
+
+<h3 id="session-storage">Session storage</h3>
+
+<p>In scenario 1. the client carrying the form data back is problematic because</p>
+
+<ol>
+<li>There is too much data to carry. Browsers restrict 4kB of data in cookies.</li>
+<li>The form data could be lost. <em>*Groans*</em> - fill your form again</li>
+<li>The data could be manipulated by a malicous third party</li>
+</ol>
+
+<p>So this option of storage is not viable and insecure for the most part.</p>
+
+<p>In scenario 2. if the teller was a different individual, there is going to be a
+lot of scurrying about trying to locate your form. In a web application there
+is no guarantee that the request is served by the same node each time. We can
+simply discount this method as infeasible.</p>
+
+<p>In scenario 3. the token is a simple key based mechanism to perform a look up
+in the filer storage. You could go to a different teller and they would still
+be able to locate your form. And you don&rsquo;t have to carry a ton of data back
+with you. Even within a client-server situation this is the favoured approach.</p>
+
+<h3 id="implementations">Implementations</h3>
+
+<p>I was going through the <a href="https://gorillatoolkit.org/pkg/sessions">gorilla
+sessions</a> pkg and was left
+<a href="https://github.com/gorilla/sessions/issues/114">confused</a> by the default
+<code>FilesystemStore</code> and memory based <code>CookieStore</code>. Both of these are cookie
+driven implementations of session storage. A look at the interface and examples
+on the gorilla website would lead you into saving your form data (encoded
+though) as part of the cookie sent back to the client. Here&rsquo;s the session save
+setting the cookie in the response.</p>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="font-style: italic">// Save adds a single session to the response.</span>
+<span style="font-weight: bold">func</span> (s *CookieStore) Save(r *http.Request, w http.ResponseWriter,
+    session *Session) <span style="font-weight: bold">error</span> {
+    <span style="font-style: italic">// Saves session and values</span>
+    encoded, err := securecookie.EncodeMulti(session.Name(), session.Values,
+        s.Codecs...)
+    <span style="font-weight: bold">if</span> err != <span style="font-weight: bold">nil</span> {
+        <span style="font-weight: bold">return</span> err
+    }
+    http.SetCookie(w, NewCookie(session.Name(), encoded, session.Options))
+    <span style="font-weight: bold">return</span> <span style="font-weight: bold">nil</span>
+}
+</pre></div>
+
+<p>As you can see the <code>session.Values</code> corresponds to the form data saved <em>if</em> you
+follow the examples. This leads to
+<a href="http://wonko.com/post/why-you-probably-shouldnt-use-cookies-to-store-session-data">abuse</a>
+of session management in frameworks in any language.</p>
+
+<p>However, the redis and couchdb implementations of the gorilla sessions do not
+have this issue. The redis implementation for instance only saves the
+<code>session.ID</code> in the cookie for later lookup in redis</p>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="font-style: italic">// Save adds a single session to the response.</span>
+<span style="font-weight: bold">func</span> (s *RediStore) Save(r *http.Request, w http.ResponseWriter, session *sessions.Session) <span style="font-weight: bold">error</span> {
+    <span style="font-style: italic">// Marked for deletion.</span>
+    <span style="font-weight: bold">if</span> session.Options.MaxAge &lt; 0 {
+        <span style="font-weight: bold">if</span> err := s.delete(session); err != <span style="font-weight: bold">nil</span> {
+            <span style="font-weight: bold">return</span> err
+        }
+        http.SetCookie(w, sessions.NewCookie(session.Name(), <span style="font-style: italic">&quot;&quot;</span>, session.Options))
+    } <span style="font-weight: bold">else</span> {
+        <span style="font-style: italic">// Build an alphanumeric key for the redis store.</span>
+        <span style="font-weight: bold">if</span> session.ID == <span style="font-style: italic">&quot;&quot;</span> {
+            session.ID = strings.TrimRight(base32.StdEncoding.EncodeToString(securecookie.GenerateRandomKey(32)), <span style="font-style: italic">&quot;=&quot;</span>)
+        }
+        <span style="font-weight: bold">if</span> err := s.save(session); err != <span style="font-weight: bold">nil</span> {
+            <span style="font-weight: bold">return</span> err
+        }
+        <span style="font-style: italic">// Only saves session.ID</span>
+        encoded, err := securecookie.EncodeMulti(session.Name(), session.ID, s.Codecs...)
+        <span style="font-weight: bold">if</span> err != <span style="font-weight: bold">nil</span> {
+            <span style="font-weight: bold">return</span> err
+        }
+        http.SetCookie(w, sessions.NewCookie(session.Name(), encoded, session.Options))
+    }
+    <span style="font-weight: bold">return</span> <span style="font-weight: bold">nil</span>
+}
+</pre></div>
+
+<p>I&rsquo;m not entirely sure of the intent of the Gorilla authors why the default
+implementations differ this way though. I must reach out to them.</p>
+
+<h3 id="security">Security</h3>
+
+<p>One topic I didn&rsquo;t touch upon is that of security. You will notice that most
+sessions are encrypted and are validated before use. In the teller scenario, if
+we flip the roles there is no guarantee that the data has not been tampered
+with. This is why the token and the data need to be secured in all cases.
+Luckily for us the Gorilla toolkit provides the <code>securecookie</code> implementation
+that does this with only a few lines of code.</p>
+
+  </div>
+
+  <div id=links>
+    
+      <a class="basic-alignment left" href="/2017/04/tweetpost/">&laquo; Tweetpost</a>
+    
+    
+  </div>
+
+  
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'vogxn';
+    var disqus_identifier = '\/2017\/05\/pitfalls-in-session-management\/';
+    var disqus_title = 'Pitfalls in session management';
+    var disqus_url = '\/2017\/05\/pitfalls-in-session-management\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  
+</section>
+
+  
+</body>
+</html>
+
+
+
