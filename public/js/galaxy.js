@@ -19,7 +19,7 @@ if (document.getElementById('stars') != null) {
 
   // Options
   opts = {
-    starCount: 0,
+    starCount: 30,
     
     radVel: .025,
     lineBaseVel: .2,
