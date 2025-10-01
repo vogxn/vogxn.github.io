@@ -1,7 +1,7 @@
 +++
 title = ""
 date = 2024-10-24
-extra = {header_img = "https://live.staticflickr.com/65535/52251273374_07b9dc68a5_3k.jpg"}
+extra = {header_img = "https://live.staticflickr.com/65535/52251273374_29c4251366_b.jpg"}
 template = "bio.html"
 path = "about"
 +++
